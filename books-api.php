@@ -32,8 +32,9 @@ $pdo = null;
 function handleGet($pdo)
 {
    try{
-    $offset = $_GET["offset"];
-    $sql = "SELECT * FROM books order by categoryId, id LIMIT 10 OFFSET ".$offset;
+    // $offset = $_GET["offset"];
+    // $sql = "SELECT * FROM books order by categoryId, id LIMIT 10 OFFSET ".$offset;
+    $sql = "SELECT * FROM books order by categoryId, title";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
