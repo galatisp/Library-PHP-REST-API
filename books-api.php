@@ -34,7 +34,8 @@ function handleGet($pdo)
    try{
     // $offset = $_GET["offset"];
     // $sql = "SELECT * FROM books order by categoryId, id LIMIT 10 OFFSET ".$offset;
-    $sql = "SELECT * FROM books order by categoryId, title";
+    $sql = "SELECT books.id, books.position, books.title, books.author, categories.name as category FROM books, `categories` 
+WHERE books.categoryId = categories.id order by category, title";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -55,7 +56,7 @@ function handlePost($pdo, $input)
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['title' => $input['title'], 'author' => $input['author'], 'category' => $input['category']]);
         $last_id = $pdo->lastInsertId();
-        $message =  'Book created successfully with ID: ' . $last_id;
+        $message =  'Το Βιβλίο καταχωρήθηκε με Κωδικό: ' . $last_id;
         echo json_encode(['message' => $message]);
     } catch (PDOException $e) {
         $message = "Error: " . $e->getMessage();
